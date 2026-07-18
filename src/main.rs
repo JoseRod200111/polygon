@@ -66,8 +66,17 @@ fn fill_polygon(
     points: &[(i32, i32)],
     color: Color,
 ) {
-    let min_y = points.iter().map(|point| point.1).min().unwrap();
-    let max_y = points.iter().map(|point| point.1).max().unwrap();
+    let min_y = points
+        .iter()
+        .map(|point| point.1)
+        .min()
+        .unwrap();
+
+    let max_y = points
+        .iter()
+        .map(|point| point.1)
+        .max()
+        .unwrap();
 
     for y in min_y..=max_y {
         let mut intersections: Vec<i32> = Vec::new();
@@ -112,22 +121,16 @@ fn fill_polygon(
 }
 
 fn main() {
-    let polygon_1 = [
-        (165, 380),
-        (185, 360),
-        (180, 330),
-        (207, 345),
-        (233, 330),
-        (230, 360),
-        (250, 380),
-        (220, 385),
-        (205, 410),
-        (193, 383),
+    let polygon_2 = [
+        (321, 335),
+        (288, 286),
+        (339, 251),
+        (374, 302),
     ];
 
     let (mut rl, thread) = raylib::init()
         .size(800, 500)
-        .title("Poligono 1")
+        .title("Poligono 2")
         .build();
 
     rl.set_target_fps(60);
@@ -139,13 +142,13 @@ fn main() {
 
         fill_polygon(
             &mut d,
-            &polygon_1,
-            Color::YELLOW,
+            &polygon_2,
+            Color::BLUE,
         );
 
         draw_polygon(
             &mut d,
-            &polygon_1,
+            &polygon_2,
             Color::WHITE,
         );
     }
