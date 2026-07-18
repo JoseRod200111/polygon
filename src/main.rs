@@ -1,6 +1,11 @@
 use raylib::prelude::*;
 
-fn put_pixel(d: &mut RaylibDrawHandle, x: i32, y: i32, color: Color) {
+fn put_pixel(
+    d: &mut RaylibDrawHandle,
+    x: i32,
+    y: i32,
+    color: Color,
+) {
     d.draw_pixel(x, y, color);
 }
 
@@ -95,8 +100,8 @@ fn fill_polygon(
             }
 
             let crosses_scanline =
-                (y1 <= y && y < y2) ||
-                (y2 <= y && y < y1);
+                (y1 <= y && y < y2)
+                    || (y2 <= y && y < y1);
 
             if crosses_scanline {
                 let x = x1 as f32
@@ -121,15 +126,38 @@ fn fill_polygon(
 }
 
 fn main() {
-    let polygon_3 = [
-        (377, 249),
-        (411, 197),
-        (436, 249),
+    let polygon_4 = [
+        (413, 177),
+        (448, 159),
+        (502, 88),
+        (553, 53),
+        (535, 36),
+        (676, 37),
+        (660, 52),
+        (750, 145),
+        (761, 179),
+        (672, 192),
+        (659, 214),
+        (615, 214),
+        (632, 230),
+        (580, 230),
+        (597, 215),
+        (552, 214),
+        (517, 144),
+        (466, 180),
+    ];
+
+    // Este polígono representa el agujero.
+    let polygon_5 = [
+        (682, 175),
+        (708, 120),
+        (735, 148),
+        (739, 170),
     ];
 
     let (mut rl, thread) = raylib::init()
         .size(800, 500)
-        .title("Poligono 3")
+        .title("Poligono 4")
         .build();
 
     rl.set_target_fps(60);
@@ -139,15 +167,32 @@ fn main() {
 
         d.clear_background(Color::BLACK);
 
+        // Rellenar el polígono principal de verde.
         fill_polygon(
             &mut d,
-            &polygon_3,
-            Color::RED,
+            &polygon_4,
+            Color::GREEN,
         );
 
+        // Pintar el interior del polígono 5 de negro
+        // para convertirlo en un agujero.
+        fill_polygon(
+            &mut d,
+            &polygon_5,
+            Color::BLACK,
+        );
+
+        // Dibujar la orilla blanca del polígono principal.
         draw_polygon(
             &mut d,
-            &polygon_3,
+            &polygon_4,
+            Color::WHITE,
+        );
+
+        // Dibujar la orilla blanca del agujero.
+        draw_polygon(
+            &mut d,
+            &polygon_5,
             Color::WHITE,
         );
     }
