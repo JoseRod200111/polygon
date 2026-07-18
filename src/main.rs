@@ -121,16 +121,15 @@ fn fill_polygon(
 }
 
 fn main() {
-    let polygon_2 = [
-        (321, 335),
-        (288, 286),
-        (339, 251),
-        (374, 302),
+    let polygon_3 = [
+        (377, 249),
+        (411, 197),
+        (436, 249),
     ];
 
     let (mut rl, thread) = raylib::init()
         .size(800, 500)
-        .title("Poligono 2")
+        .title("Poligono 3")
         .build();
 
     rl.set_target_fps(60);
@@ -142,13 +141,13 @@ fn main() {
 
         fill_polygon(
             &mut d,
-            &polygon_2,
-            Color::BLUE,
+            &polygon_3,
+            Color::RED,
         );
 
         draw_polygon(
             &mut d,
-            &polygon_2,
+            &polygon_3,
             Color::WHITE,
         );
     }
