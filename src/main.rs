@@ -126,6 +126,32 @@ fn fill_polygon(
 }
 
 fn main() {
+    let polygon_1 = [
+        (165, 380),
+        (185, 360),
+        (180, 330),
+        (207, 345),
+        (233, 330),
+        (230, 360),
+        (250, 380),
+        (220, 385),
+        (205, 410),
+        (193, 383),
+    ];
+
+    let polygon_2 = [
+        (321, 335),
+        (288, 286),
+        (339, 251),
+        (374, 302),
+    ];
+
+    let polygon_3 = [
+        (377, 249),
+        (411, 197),
+        (436, 249),
+    ];
+
     let polygon_4 = [
         (413, 177),
         (448, 159),
@@ -147,7 +173,6 @@ fn main() {
         (466, 180),
     ];
 
-    // Este polígono representa el agujero.
     let polygon_5 = [
         (682, 175),
         (708, 120),
@@ -157,43 +182,95 @@ fn main() {
 
     let (mut rl, thread) = raylib::init()
         .size(800, 500)
-        .title("Poligono 4")
+        .title("Laboratorio de Poligonos")
         .build();
 
     rl.set_target_fps(60);
 
+    let mut image_saved = false;
+
     while !rl.window_should_close() {
-        let mut d = rl.begin_drawing(&thread);
+        {
+            let mut d = rl.begin_drawing(&thread);
 
-        d.clear_background(Color::BLACK);
+            d.clear_background(Color::BLACK);
 
-        // Rellenar el polígono principal de verde.
-        fill_polygon(
-            &mut d,
-            &polygon_4,
-            Color::GREEN,
-        );
+            // Polígono 1: amarillo con orilla blanca.
+            fill_polygon(
+                &mut d,
+                &polygon_1,
+                Color::YELLOW,
+            );
 
-        // Pintar el interior del polígono 5 de negro
-        // para convertirlo en un agujero.
-        fill_polygon(
-            &mut d,
-            &polygon_5,
-            Color::BLACK,
-        );
+            draw_polygon(
+                &mut d,
+                &polygon_1,
+                Color::WHITE,
+            );
 
-        // Dibujar la orilla blanca del polígono principal.
-        draw_polygon(
-            &mut d,
-            &polygon_4,
-            Color::WHITE,
-        );
+            // Polígono 2: azul con orilla blanca.
+            fill_polygon(
+                &mut d,
+                &polygon_2,
+                Color::BLUE,
+            );
 
-        // Dibujar la orilla blanca del agujero.
-        draw_polygon(
-            &mut d,
-            &polygon_5,
-            Color::WHITE,
-        );
+            draw_polygon(
+                &mut d,
+                &polygon_2,
+                Color::WHITE,
+            );
+
+            // Polígono 3: rojo con orilla blanca.
+            fill_polygon(
+                &mut d,
+                &polygon_3,
+                Color::RED,
+            );
+
+            draw_polygon(
+                &mut d,
+                &polygon_3,
+                Color::WHITE,
+            );
+
+            // Polígono 4: verde con orilla blanca.
+            fill_polygon(
+                &mut d,
+                &polygon_4,
+                Color::GREEN,
+            );
+
+            // Polígono 5: agujero negro dentro del Polígono 4.
+            fill_polygon(
+                &mut d,
+                &polygon_5,
+                Color::BLACK,
+            );
+
+            draw_polygon(
+                &mut d,
+                &polygon_4,
+                Color::WHITE,
+            );
+
+            draw_polygon(
+                &mut d,
+                &polygon_5,
+                Color::WHITE,
+            );
+        }
+
+        // Guardar la imagen una sola vez.
+        if !image_saved {
+            rl.take_screenshot(
+                &thread,
+                "out.bmp",
+            );
+
+            println!("Imagen guardada correctamente como out.bmp");
+
+            image_saved = true;
+        }
     }
 }
